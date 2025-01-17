@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="Interop.HwpObjectLib">
+      <HintPath>obj/Interop.HwpObjectLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

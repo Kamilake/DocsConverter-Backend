@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using DocsConverter;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-
+builder.Services.AddSingleton<Hwp2Pdf>();
 var app = builder.Build();
 app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
-app.Run();
+PrintButtonClicker clicker = new();
+clicker.clickerThread.Start();
+
+app.Run("http://0.0.0.0:5000"); // 모든 IP 주소에서 수신 대기
