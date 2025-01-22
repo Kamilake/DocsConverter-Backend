@@ -133,6 +133,21 @@ namespace DocsConverter.Controllers
       return new FileStreamResult(fileStream, "text/plain");
     }
 
+    [HttpHead("to-txt")]
+    public IActionResult HeadTxt([FromQuery] string? fileUrl)
+    {
+      if (string.IsNullOrEmpty(fileUrl))
+      {
+        return BadRequest("Please provide a file URL.");
+      }
+
+      DownloadAndConvertFile(fileUrl, "output.txt", "text/plain", out var filePath, out var fileName, out var fileSize);
+      var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+      Response.Headers.Append("Content-Disposition", $"filename={fileName}");
+      Response.Headers.Append("Content-Length", fileSize.ToString());
+      return new FileStreamResult(fileStream, "text/plain");
+    }
+
     [HttpGet("to-rtf")]
     public IActionResult GetRtf([FromQuery] string? fileUrl)
     {
